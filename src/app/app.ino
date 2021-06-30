@@ -22,11 +22,14 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  if (temperaturaDeRiego) {
+    if(humedadDeRiego && )
+  }
 
 }
 
 
+// Evalua la temperatura actual con la que se determina con la constante
 bool temperaturaDeRiego(const float TEMPERATUR_RIEGO) {
   float tempCelsius = bme280Sensor.readTempC();
 
@@ -36,3 +39,11 @@ bool temperaturaDeRiego(const float TEMPERATUR_RIEGO) {
 
   return false;
 }
+
+bool humedadDeRiego(const float HUMEDAD_RIEGO){
+  // code...
+  // TODO: ver el sensor de humedad en la tierra
+    
+}
+
+bool presionDeRiego(const float PRESION_RIEGO){}
