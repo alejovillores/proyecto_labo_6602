@@ -1,15 +1,23 @@
 #include <Wire.h>
-#include <SPI.h>
-#include <Adafruit_BMP280.h> // Libreria para los sensores de temperaturas
+#include "SparkFunBME280.h"
 
 // Constantes del programa
-const float TEMPERATUR_RIEGO = 25.0; 
+const float TEMPERATUR_RIEGO = 25.0;
 
-
+BME280 bme280Sensor;
 
 
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(115200);
+  Serial.println("Lecturas del sensor BME280");
+
+  Wire.begin();
+
+  if (mySensor.beginI2C() == false) //Begin communication over I2C
+  {
+    Serial.println("El sensor no respondió. Controlar el cableado.");
+    while(1); //Freeze
+  }
 
 }
 
@@ -20,5 +28,11 @@ void loop() {
 
 
 bool temperaturaDeRiego(const float TEMPERATUR_RIEGO) {
-  float tempEnCelsius = 
+  float tempCelsius = bme280Sensor.readTempC();
+
+  if (tempCelsius >= TEMPERATURA_RIEGO){
+    return true;
+  }
+
+  return false;
 }
