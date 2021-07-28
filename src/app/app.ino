@@ -2,10 +2,13 @@
 #include "SparkFunBME280.h"
 
 // Constantes del programa
+const long HORA = 1800000; // 30 minutos
 const float TEMPERATURA_RIEGO = 25.0;
 const float HUMEDAD_RIEGO = 0.0;
 const float PRESION_RIEGO = 0.0;
-const int TIEMPO = 180000;
+const int TIEMPO = 180000; // 3 minutos
+bool yaSeRego = false;
+
 
 BME280 bme280Sensor;
 
@@ -25,6 +28,7 @@ void setup() {
 }
 
 void loop() {
+  
   if (humedadDeRiego()) {
     if( temperaturaDeRiego() || presionDeRiego()) {
       activarRegador(TIEMPO);
@@ -53,6 +57,17 @@ bool presionDeRiego(){
   return presionMedida >= PRESION_RIEGO;
   }
 
+// Activa el regador si no se ha regado durante los ultimos 30 min
 void activarRegador(const int TIEMPO){
-  // code...
+  if (!yaSeRego){
+    // prendemos el motor
+    yaSeRego = true;
+    desactivarEstado();
+  }
+}
+
+// Desactiva el estado despues de 30 min
+void desactivarEstado(){
+  delay(HORA);
+  yaSeRego = false;
 }
