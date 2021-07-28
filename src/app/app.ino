@@ -7,8 +7,12 @@ const float TEMPERATURA_RIEGO = 25.0;
 const float HUMEDAD_RIEGO = 0.0;
 const float PRESION_RIEGO = 0.0;
 const int TIEMPO = 180000; // 3 minutos
-bool yaSeRego = false;
 
+bool yaSeRego = false;
+float tempCelsius = 0;
+float humedadMedida = 0;
+float humedadPorcentual = 0.0;
+float presionMedida = 0;
 
 BME280 bme280Sensor;
 
@@ -41,20 +45,21 @@ void loop() {
 
 // Evalua la temperatura actual con la que se determina con la constante
 bool temperaturaDeRiego() {
-  float tempCelsius = bme280Sensor.readTempC();
+  tempCelsius = bme280Sensor.readTempC();
 
   return tempCelsius >= TEMPERATURA_RIEGO;
 }
 
 // Evalua la humedad actual con la que se determina con la constante
 bool humedadDeRiego(){
-  float humedadMedida = analogRead(A0);
+  humedadMedida = analogRead(A0);
+  humedadPorcentual =
 
   return humedadMedida >= HUMEDAD_RIEGO;
 }
 // Evalua la presion actual con la que se determina con la constante
 bool presionDeRiego(){
-  float presionMedida = bme280Sensor.readFloatPressure();
+  presionMedida = bme280Sensor.readFloatPressure();
 
   return presionMedida >= PRESION_RIEGO;
   }
