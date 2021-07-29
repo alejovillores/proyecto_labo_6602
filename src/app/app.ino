@@ -4,7 +4,7 @@
 // Constantes
 const long HORA = 1800000; // 30 minutos
 const float TEMPERATURA_RIEGO = 25.0;
-const float HUMEDAD_RIEGO = 0.0;
+const float HUMEDAD_RIEGO = 940.0;
 const float PRESION_RIEGO = 0.0;
 const int TIEMPO_DE_REGADO = 180000; // 3 minutos
 
@@ -26,19 +26,20 @@ void setup() {
   pinMode(relayPin,OUTPUT);
   Wire.begin();
 
-  if (mySensor.beginI2C() == false) //Begin communication over I2C
+  if (mySensor.beginI2C() == false) //Comienzo de la comunicacion sobre I2C
   {
     Serial.println("El sensor no respondió. Controlar el cableado.");
-    while(1); //Freeze
+    while(1); // Congelar
   }
 
 }
 
 void loop() {
-  
+
+  // Control por humedad
   if (humedadDeRiego()) {
     if( temperaturaDeRiego() || presionDeRiego()) {
-      activarRegador(TIEMPO);
+      activarRegador();
     }
   }
   // Delay de 10 min
